@@ -1,4 +1,3 @@
-
 import { create } from 'zustand';
 
 interface User {
@@ -12,10 +11,12 @@ interface AuthState {
   isAuthenticated: boolean;
   isLoading: boolean;
   error: string | null;
+  resetEmailSent: boolean;
   
   // Actions
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
+  requestPasswordReset: (email: string) => Promise<void>;
 }
 
 // Mock admin credentials
@@ -27,6 +28,7 @@ export const useAuthStore = create<AuthState>((set) => ({
   isAuthenticated: false,
   isLoading: false,
   error: null,
+  resetEmailSent: false,
   
   login: async (email, password) => {
     set({ isLoading: true, error: null });
@@ -68,5 +70,33 @@ export const useAuthStore = create<AuthState>((set) => ({
       user: null, 
       isAuthenticated: false 
     });
+  },
+  
+  requestPasswordReset: async (email) => {
+    set({ isLoading: true, error: null });
+    
+    try {
+      // Simulate API call delay
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      // Mock password reset logic - in a real app, this would send an email
+      if (email === ADMIN_EMAIL) {
+        set({ 
+          isLoading: false,
+          resetEmailSent: true,
+          error: null
+        });
+      } else {
+        set({ 
+          isLoading: false, 
+          error: 'No account found with this email'
+        });
+      }
+    } catch (error) {
+      set({ 
+        isLoading: false, 
+        error: 'An error occurred while processing your request' 
+      });
+    }
   },
 }));

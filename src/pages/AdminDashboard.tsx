@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Navbar } from "@/components/Navbar";
@@ -41,15 +40,20 @@ const AdminDashboard = () => {
   const [categoryFilter, setCategoryFilter] = useState("all");
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [eventToDelete, setEventToDelete] = useState<Event | null>(null);
+  const [sortConfig, setSortConfig] = useState<{
+    key: 'title' | 'date' | 'category';
+    direction: 'asc' | 'desc';
+  }>({
+    key: 'date',
+    direction: 'desc'
+  });
 
-  // Check if user is authenticated
   useEffect(() => {
     if (!isAuthenticated) {
       navigate("/login");
     }
   }, [isAuthenticated, navigate]);
 
-  // Filter events based on search term and category
   const filteredEvents = events.filter((event) => {
     const matchesSearch =
       event.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -61,10 +65,30 @@ const AdminDashboard = () => {
     return matchesSearch && matchesCategory;
   });
 
-  // Extract unique categories from events
   const categories = ["all", ...Array.from(new Set(events.map((event) => event.category)))];
 
-  // Event Handlers
+  const sortedEvents = [...filteredEvents].sort((a, b) => {
+    const direction = sortConfig.direction === 'asc' ? 1 : -1;
+    
+    switch (sortConfig.key) {
+      case 'title':
+        return direction * a.title.localeCompare(b.title);
+      case 'date':
+        return direction * (new Date(a.date).getTime() - new Date(b.date).getTime());
+      case 'category':
+        return direction * a.category.localeCompare(b.category);
+      default:
+        return 0;
+    }
+  });
+
+  const toggleSort = (key: 'title' | 'date' | 'category') => {
+    setSortConfig(prev => ({
+      key,
+      direction: prev.key === key && prev.direction === 'asc' ? 'desc' : 'asc'
+    }));
+  };
+
   const handleAddEvent = (eventData: Omit<Event, "id">) => {
     addEvent(eventData);
     setShowEventForm(false);
@@ -212,7 +236,7 @@ const AdminDashboard = () => {
             >
               <div className="p-6 border-b">
                 <h2 className="text-xl font-bold">
-                  Events ({filteredEvents.length})
+                  Events ({sortedEvents.length})
                 </h2>
               </div>
               
@@ -220,16 +244,43 @@ const AdminDashboard = () => {
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead>Event</TableHead>
-                      <TableHead>Date</TableHead>
-                      <TableHead>Category</TableHead>
+                      <TableHead 
+                        className="cursor-pointer hover:bg-gray-50"
+                        onClick={() => toggleSort('title')}
+                      >
+                        Event {sortConfig.key === 'title' && (
+                          <span className="ml-1">
+                            {sortConfig.direction === 'asc' ? '↑' : '↓'}
+                          </span>
+                        )}
+                      </TableHead>
+                      <TableHead 
+                        className="cursor-pointer hover:bg-gray-50"
+                        onClick={() => toggleSort('date')}
+                      >
+                        Date {sortConfig.key === 'date' && (
+                          <span className="ml-1">
+                            {sortConfig.direction === 'asc' ? '↑' : '↓'}
+                          </span>
+                        )}
+                      </TableHead>
+                      <TableHead 
+                        className="cursor-pointer hover:bg-gray-50"
+                        onClick={() => toggleSort('category')}
+                      >
+                        Category {sortConfig.key === 'category' && (
+                          <span className="ml-1">
+                            {sortConfig.direction === 'asc' ? '↑' : '↓'}
+                          </span>
+                        )}
+                      </TableHead>
                       <TableHead>Status</TableHead>
                       <TableHead className="text-right">Actions</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {filteredEvents.length > 0 ? (
-                      filteredEvents.map((event) => (
+                    {sortedEvents.length > 0 ? (
+                      sortedEvents.map((event) => (
                         <TableRow key={event.id}>
                           <TableCell>
                             <div className="flex items-center space-x-3">
@@ -317,7 +368,6 @@ const AdminDashboard = () => {
         </div>
       </div>
 
-      {/* Delete Confirmation Dialog */}
       <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
         <DialogContent>
           <DialogHeader>
@@ -337,7 +387,6 @@ const AdminDashboard = () => {
         </DialogContent>
       </Dialog>
 
-      {/* Footer */}
       <footer className="bg-gray-800 text-white py-8">
         <div className="container mx-auto px-4 text-center">
           <p>&copy; {new Date().getFullYear()} AVN Institute. All rights reserved.</p>
