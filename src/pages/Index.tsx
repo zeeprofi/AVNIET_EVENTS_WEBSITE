@@ -1,8 +1,9 @@
+
 import { useState } from "react";
 import { Navbar } from "@/components/Navbar";
 import { EventCard, FeaturedEventCard } from "@/components/EventCard";
 import { useEventStore } from "@/store/eventStore";
-import { Calendar, MapPin } from "lucide-react";
+import { Calendar, MapPin, Users } from "lucide-react";
 import { MotionBox, MotionSection, fadeIn, slideIn, staggerContainer } from "@/components/ui/motion";
 
 const Index = () => {
@@ -133,6 +134,11 @@ const Index = () => {
                         <MapPin className="h-4 w-4 mr-2 text-event-500" />
                         <span>{event.venue}</span>
                       </div>
+                      
+                      <div className="flex items-center text-gray-500">
+                        <Users className="h-4 w-4 mr-2 text-event-500" />
+                        <span>{event.registeredTeams || 0} Teams Registered</span>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -158,6 +164,7 @@ const Index = () => {
               <ul className="space-y-2">
                 <li><a href="/" className="text-gray-300 hover:text-white">Home</a></li>
                 <li><a href="/events" className="text-gray-300 hover:text-white">Events</a></li>
+                <li><a href="/register" className="text-gray-300 hover:text-white">Team Registration</a></li>
                 <li><a href="/login" className="text-gray-300 hover:text-white">Admin Login</a></li>
               </ul>
             </div>

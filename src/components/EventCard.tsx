@@ -1,7 +1,7 @@
 
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Calendar, MapPin } from 'lucide-react';
+import { Calendar, MapPin, Users } from 'lucide-react';
 import { Event } from '@/data/mockEvents';
 import { MotionBox, scaleIn } from './ui/motion';
 import { Badge } from './ui/badge';
@@ -41,16 +41,28 @@ export const EventCard = ({ event, index }: EventCardProps) => {
           <span>{event.date}</span>
         </div>
         
-        <div className="flex items-center mb-4 text-gray-500 text-sm">
+        <div className="flex items-center mb-3 text-gray-500 text-sm">
           <MapPin className="h-4 w-4 mr-1 text-event-500" />
           <span className="truncate">{event.venue}</span>
         </div>
         
-        <Link to={`/events/${event.id}`}>
-          <Button variant="default" className="w-full">
-            View Details
-          </Button>
-        </Link>
+        <div className="flex items-center mb-4 text-gray-500 text-sm">
+          <Users className="h-4 w-4 mr-1 text-event-500" />
+          <span>{event.registeredTeams || 0} Teams</span>
+        </div>
+        
+        <div className="grid grid-cols-2 gap-2">
+          <Link to={`/events/${event.id}`}>
+            <Button variant="outline" className="w-full">
+              View Details
+            </Button>
+          </Link>
+          <Link to={`/register?eventId=${event.id}`}>
+            <Button variant="default" className="w-full">
+              Register
+            </Button>
+          </Link>
+        </div>
       </div>
     </MotionBox>
   );
@@ -95,11 +107,21 @@ export const FeaturedEventCard = ({ event, index }: EventCardProps) => {
               <MapPin className="h-4 w-4 mr-2" />
               <span>{event.venue}</span>
             </div>
+            
+            <div className="flex items-center text-white/80">
+              <Users className="h-4 w-4 mr-2" />
+              <span>{event.registeredTeams || 0} Teams</span>
+            </div>
           </div>
           
-          <Link to={`/events/${event.id}`}>
-            <Button>View Details</Button>
-          </Link>
+          <div className="flex gap-3">
+            <Link to={`/events/${event.id}`}>
+              <Button>View Details</Button>
+            </Link>
+            <Link to={`/register?eventId=${event.id}`}>
+              <Button variant="secondary">Register Team</Button>
+            </Link>
+          </div>
         </div>
       </div>
     </MotionBox>

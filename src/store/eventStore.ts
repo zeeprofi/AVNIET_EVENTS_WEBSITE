@@ -14,18 +14,21 @@ interface EventState {
   deleteEvent: (id: string) => void;
   setCurrentEvent: (id: string) => void;
   clearCurrentEvent: () => void;
+  registerTeam: (eventId: string) => void;
 }
 
 export const useEventStore = create<EventState>((set, get) => ({
-  events: mockEvents,
-  featuredEvents: mockEvents.filter(event => event.isFeatured),
-  upcomingEvents: [...mockEvents].sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()),
+  events: mockEvents.map(event => ({ ...event, registeredTeams: Math.floor(Math.random() * 10) })),
+  featuredEvents: mockEvents.filter(event => event.isFeatured).map(event => ({ ...event, registeredTeams: Math.floor(Math.random() * 10) })),
+  upcomingEvents: [...mockEvents].map(event => ({ ...event, registeredTeams: Math.floor(Math.random() * 10) }))
+    .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()),
   currentEvent: null,
   
   addEvent: (event) => {
     const newEvent = {
       ...event,
       id: `${Date.now()}`,
+      registeredTeams: 0
     };
     
     set((state) => ({
@@ -80,5 +83,26 @@ export const useEventStore = create<EventState>((set, get) => ({
   
   clearCurrentEvent: () => {
     set({ currentEvent: null });
+  },
+  
+  registerTeam: (eventId) => {
+    set((state) => {
+      const updatedEvents = state.events.map((event) => 
+        event.id === eventId 
+          ? { ...event, registeredTeams: (event.registeredTeams || 0) + 1 } 
+          : event
+      );
+      
+      return {
+        events: updatedEvents,
+        featuredEvents: updatedEvents.filter(event => event.isFeatured),
+        upcomingEvents: [...updatedEvents].sort((a, b) => 
+          new Date(a.date).getTime() - new Date(b.date).getTime()
+        ),
+        currentEvent: state.currentEvent?.id === eventId 
+          ? { ...state.currentEvent, registeredTeams: (state.currentEvent.registeredTeams || 0) + 1 } 
+          : state.currentEvent,
+      };
+    });
   },
 }));

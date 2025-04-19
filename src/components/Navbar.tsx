@@ -19,6 +19,7 @@ export const Navbar = () => {
   const navLinks = [
     { name: 'Home', path: '/' },
     { name: 'Events', path: '/events' },
+    { name: 'Team Registration', path: '/register' },
   ];
 
   return (
@@ -32,9 +33,14 @@ export const Navbar = () => {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2" onClick={closeMenu}>
-            <div className="text-2xl font-bold text-primary">
+            <div className="text-2xl font-bold text-primary flex items-center">
               <span className="text-event-700">AVN</span>
               <span className="text-event-500">Events</span>
+              <img 
+                src="/lovable-uploads/f2309d66-aeaf-46dd-8c55-84608646e279.png" 
+                alt="AVNIET Logo" 
+                className="h-10 ml-2" 
+              />
             </div>
           </Link>
 
