@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { Navbar } from "@/components/Navbar";
@@ -46,6 +45,7 @@ const TeamRegistration = () => {
   const [showSuccess, setShowSuccess] = useState(false);
 
   const event = events.find((e) => e.id === eventId);
+  const MAX_TEAM_SIZE = 5; // Maximum number of team members allowed
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -98,12 +98,12 @@ const TeamRegistration = () => {
   };
 
   const addTeamMember = () => {
-    if (fields.length < 5) {
+    if (fields.length < MAX_TEAM_SIZE) {
       append({ name: "", email: "", collegeId: "" });
     } else {
       toast({
-        title: "Maximum Members Reached",
-        description: "You can add a maximum of 5 team members.",
+        title: "Maximum Team Size Reached",
+        description: `Teams cannot have more than ${MAX_TEAM_SIZE} members.`,
         variant: "destructive",
       });
     }
@@ -320,12 +320,18 @@ const TeamRegistration = () => {
                 {/* Team Members Section */}
                 <div className="border border-gray-100 rounded-lg">
                   <div className="p-4 bg-gray-50 rounded-t-lg flex justify-between items-center">
-                    <h3 className="text-lg font-semibold text-event-700">Team Members</h3>
+                    <div>
+                      <h3 className="text-lg font-semibold text-event-700">Team Members</h3>
+                      <p className="text-sm text-gray-500">
+                        Maximum {MAX_TEAM_SIZE} members allowed • {MAX_TEAM_SIZE - fields.length} spots remaining
+                      </p>
+                    </div>
                     <Button 
                       type="button" 
                       onClick={addTeamMember} 
                       variant="outline"
                       className="flex items-center text-event-700"
+                      disabled={fields.length >= MAX_TEAM_SIZE}
                     >
                       <PlusCircle className="mr-2 h-4 w-4" />
                       Add Member
