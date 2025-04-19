@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Event } from "@/data/mockEvents";
 import { Button } from "@/components/ui/button";
@@ -17,7 +16,7 @@ interface EventFormProps {
   isEditing?: boolean;
 }
 
-export const EventForm = ({
+const EventForm = ({
   event,
   onSubmit,
   onCancel,
@@ -32,6 +31,7 @@ export const EventForm = ({
     venue: "",
     category: "Technical",
     image: "",
+    organizer: "", // Added missing organizer field
     contactInfo: "",
     isFeatured: false,
   });
@@ -376,6 +376,23 @@ export const EventForm = ({
           </div>
         </div>
 
+      {/* Organizer field */}
+      <div className="space-y-2">
+        <Label htmlFor="organizer">
+          Organizer <span className="text-red-500">*</span>
+        </Label>
+        <Input
+          id="organizer"
+          name="organizer"
+          value={formData.organizer}
+          onChange={handleChange}
+          className={errors.organizer ? "border-red-500" : ""}
+        />
+        {errors.organizer && (
+          <p className="text-red-500 text-sm">{errors.organizer}</p>
+        )}
+      </div>
+
         <div className="flex justify-end space-x-2 pt-4">
           <Button type="button" variant="outline" onClick={onCancel}>
             Cancel
@@ -394,3 +411,5 @@ export const EventForm = ({
     </MotionBox>
   );
 };
+
+export default EventForm;

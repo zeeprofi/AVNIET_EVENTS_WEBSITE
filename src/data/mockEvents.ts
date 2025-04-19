@@ -25,7 +25,7 @@ export const events: Event[] = [
     time: '09:00 - 17:00',
     venue: 'AVN Institute Auditorium',
     category: 'Technology',
-    image: '/lovable-uploads/f649999c-893d-4051-b91d-852ca801933b.png',
+    image: 'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b',
     organizer: 'Tech Club',
     isFeatured: true,
     contactInfo: 'techclub@avniet.edu'
@@ -39,7 +39,7 @@ export const events: Event[] = [
     time: '10:00 - 20:00',
     venue: 'AVN Institute Grounds',
     category: 'Cultural',
-    image: '/lovable-uploads/4999a958-7951-4597-8971-6c89458a4a7b.png',
+    image: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6',
     organizer: 'Cultural Committee',
     isFeatured: true,
     contactInfo: 'culturalclub@avniet.edu'
@@ -53,7 +53,7 @@ export const events: Event[] = [
     time: '09:00 - 09:00 (Next Day)',
     venue: 'AVN Institute Computer Labs',
     category: 'Technology',
-    image: '/lovable-uploads/4999a958-7951-4597-8971-6c89458a4a7b.png',
+    image: 'https://images.unsplash.com/photo-1518770660439-4636190af475',
     organizer: 'Coding Club',
     isFeatured: false,
     contactInfo: 'codingclub@avniet.edu'
@@ -67,7 +67,7 @@ export const events: Event[] = [
     time: '08:00 - 18:00',
     venue: 'AVN Institute Sports Complex',
     category: 'Sports',
-    image: '/lovable-uploads/f649999c-893d-4051-b91d-852ca801933b.png',
+    image: 'https://images.unsplash.com/photo-1649972904349-6e44c42644a7',
     organizer: 'Sports Committee',
     isFeatured: false,
     contactInfo: 'sports@avniet.edu'
@@ -81,7 +81,7 @@ export const events: Event[] = [
     time: '10:00 - 16:00',
     venue: 'AVN Institute Seminar Hall',
     category: 'Workshop',
-    image: '/lovable-uploads/4999a958-7951-4597-8971-6c89458a4a7b.png',
+    image: 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d',
     organizer: 'E-Cell',
     isFeatured: false,
     contactInfo: 'ecell@avniet.edu'
@@ -95,7 +95,7 @@ export const events: Event[] = [
     time: '11:00 - 19:00',
     venue: 'AVN Institute Art Gallery',
     category: 'Arts',
-    image: '/lovable-uploads/f649999c-893d-4051-b91d-852ca801933b.png',
+    image: 'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b',
     organizer: 'Arts Club',
     isFeatured: false,
     contactInfo: 'artsclub@avniet.edu'
@@ -109,7 +109,7 @@ export const events: Event[] = [
     time: '14:00 - 18:00',
     venue: 'AVN Institute Lecture Hall',
     category: 'Debate',
-    image: '/lovable-uploads/4999a958-7951-4597-8971-6c89458a4a7b.png',
+    image: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6',
     organizer: 'Debate Club',
     isFeatured: false,
     contactInfo: 'debateclub@avniet.edu'
@@ -123,7 +123,7 @@ export const events: Event[] = [
     time: '19:00 - 22:00',
     venue: 'AVN Institute Open-Air Theatre',
     category: 'Music',
-    image: '/lovable-uploads/f649999c-893d-4051-b91d-852ca801933b.png',
+    image: 'https://images.unsplash.com/photo-1518770660439-4636190af475',
     organizer: 'Music Club',
     isFeatured: false,
     contactInfo: 'musicclub@avniet.edu'
@@ -137,7 +137,7 @@ export const events: Event[] = [
     time: '10:00 - 20:00',
     venue: 'AVN Institute Gaming Arena',
     category: 'Gaming',
-    image: '/lovable-uploads/4999a958-7951-4597-8971-6c89458a4a7b.png',
+    image: 'https://images.unsplash.com/photo-1649972904349-6e44c42644a7',
     organizer: 'Gaming Club',
     isFeatured: false,
     contactInfo: 'gamingclub@avniet.edu'
@@ -151,7 +151,7 @@ export const events: Event[] = [
     time: '10:00 - 16:00',
     venue: 'AVN Institute Photography Studio',
     category: 'Workshop',
-    image: '/lovable-uploads/f649999c-893d-4051-b91d-852ca801933b.png',
+    image: 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d',
     organizer: 'Photography Club',
     isFeatured: false,
     contactInfo: 'photoclub@avniet.edu'
