@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { Navbar } from "@/components/Navbar";
@@ -16,6 +17,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { useToast } from "@/hooks/use-toast";
 import { MotionBox, MotionSection, fadeIn, slideIn } from "@/components/ui/motion";
 
+// Define the team member schema to match TeamMember type in eventStore
 const teamMemberSchema = z.object({
   name: z.string().min(3, { message: "Name must be at least 3 characters" }),
   email: z.string().email({ message: "Please enter a valid email address" }),
@@ -67,6 +69,8 @@ const TeamRegistration = () => {
   const onSubmit = (data: FormValues) => {
     console.log("Form submitted:", data);
     
+    // Create registration data with the correct type structure
+    // Ensuring all members have the required properties as non-optional
     const registrationData: Omit<TeamRegistrationType, 'id' | 'registeredAt'> = {
       eventId: data.eventId,
       teamName: data.teamName,
@@ -75,7 +79,12 @@ const TeamRegistration = () => {
       leaderPhone: data.leaderPhone,
       leaderBranch: data.leaderBranch,
       leaderYear: data.leaderYear,
-      members: data.members
+      // The members array now has the correct type because of our formSchema definition
+      members: data.members.map(member => ({
+        name: member.name,
+        email: member.email,
+        collegeId: member.collegeId
+      }))
     };
 
     registerTeam(registrationData);
