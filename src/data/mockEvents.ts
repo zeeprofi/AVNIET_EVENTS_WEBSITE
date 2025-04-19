@@ -1,3 +1,4 @@
+
 export interface Event {
   id: string;
   title: string;
@@ -11,6 +12,7 @@ export interface Event {
   organizer: string;
   isFeatured: boolean;
   registeredTeams?: number;
+  contactInfo: string;
 }
 
 export const events: Event[] = [
@@ -26,6 +28,7 @@ export const events: Event[] = [
     image: '/lovable-uploads/f649999c-893d-4051-b91d-852ca801933b.png',
     organizer: 'Tech Club',
     isFeatured: true,
+    contactInfo: 'techclub@avniet.edu'
   },
   {
     id: '2',
@@ -39,6 +42,7 @@ export const events: Event[] = [
     image: '/lovable-uploads/4999a958-7951-4597-8971-6c89458a4a7b.png',
     organizer: 'Cultural Committee',
     isFeatured: true,
+    contactInfo: 'culturalclub@avniet.edu'
   },
   {
     id: '3',
@@ -52,6 +56,7 @@ export const events: Event[] = [
     image: '/lovable-uploads/4999a958-7951-4597-8971-6c89458a4a7b.png',
     organizer: 'Coding Club',
     isFeatured: false,
+    contactInfo: 'codingclub@avniet.edu'
   },
   {
     id: '4',
@@ -65,6 +70,7 @@ export const events: Event[] = [
     image: '/lovable-uploads/f649999c-893d-4051-b91d-852ca801933b.png',
     organizer: 'Sports Committee',
     isFeatured: false,
+    contactInfo: 'sports@avniet.edu'
   },
   {
     id: '5',
@@ -78,6 +84,7 @@ export const events: Event[] = [
     image: '/lovable-uploads/4999a958-7951-4597-8971-6c89458a4a7b.png',
     organizer: 'E-Cell',
     isFeatured: false,
+    contactInfo: 'ecell@avniet.edu'
   },
   {
     id: '6',
@@ -91,6 +98,7 @@ export const events: Event[] = [
     image: '/lovable-uploads/f649999c-893d-4051-b91d-852ca801933b.png',
     organizer: 'Arts Club',
     isFeatured: false,
+    contactInfo: 'artsclub@avniet.edu'
   },
   {
     id: '7',
@@ -104,6 +112,7 @@ export const events: Event[] = [
     image: '/lovable-uploads/4999a958-7951-4597-8971-6c89458a4a7b.png',
     organizer: 'Debate Club',
     isFeatured: false,
+    contactInfo: 'debateclub@avniet.edu'
   },
   {
     id: '8',
@@ -117,6 +126,7 @@ export const events: Event[] = [
     image: '/lovable-uploads/f649999c-893d-4051-b91d-852ca801933b.png',
     organizer: 'Music Club',
     isFeatured: false,
+    contactInfo: 'musicclub@avniet.edu'
   },
   {
     id: '9',
@@ -130,6 +140,7 @@ export const events: Event[] = [
     image: '/lovable-uploads/4999a958-7951-4597-8971-6c89458a4a7b.png',
     organizer: 'Gaming Club',
     isFeatured: false,
+    contactInfo: 'gamingclub@avniet.edu'
   },
   {
     id: '10',
@@ -143,5 +154,6 @@ export const events: Event[] = [
     image: '/lovable-uploads/f649999c-893d-4051-b91d-852ca801933b.png',
     organizer: 'Photography Club',
     isFeatured: false,
+    contactInfo: 'photoclub@avniet.edu'
   },
 ];
