@@ -1,4 +1,3 @@
-
 import { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Navbar } from "@/components/Navbar";
@@ -42,11 +41,7 @@ const EventDetails = () => {
   }
 
   const handleRegister = () => {
-    toast({
-      title: "Registration Successful!",
-      description: `You have registered for ${currentEvent.title}`,
-      duration: 5000,
-    });
+    navigate(`/register?eventId=${currentEvent.id}`);
   };
 
   const handleShare = () => {
