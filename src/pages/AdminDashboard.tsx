@@ -12,6 +12,7 @@ import { EventFilters } from "@/components/admin/EventFilters";
 import { EventsTable } from "@/components/admin/EventsTable";
 import { DeleteEventDialog } from "@/components/admin/DeleteEventDialog";
 import { TeamRegistrationsView } from "@/components/admin/TeamRegistrationsView";
+import { Button } from "@/components/ui/button";
 
 const AdminDashboard = () => {
   const { isAuthenticated, logout } = useAuthStore();

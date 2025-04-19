@@ -1,11 +1,10 @@
-
 import { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { Navbar } from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useEventStore } from "@/store/eventStore";
+import { useEventStore, TeamRegistration as TeamRegistrationType } from "@/store/eventStore";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Trash2, PlusCircle, UserPlus, CheckCircle } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -17,7 +16,6 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { useToast } from "@/hooks/use-toast";
 import { MotionBox, MotionSection, fadeIn, slideIn } from "@/components/ui/motion";
 
-// Define the form schema with zod
 const teamMemberSchema = z.object({
   name: z.string().min(3, { message: "Name must be at least 3 characters" }),
   email: z.string().email({ message: "Please enter a valid email address" }),
@@ -68,10 +66,21 @@ const TeamRegistration = () => {
 
   const onSubmit = (data: FormValues) => {
     console.log("Form submitted:", data);
-    registerTeam(data.eventId);
+    
+    const registrationData: Omit<TeamRegistrationType, 'id' | 'registeredAt'> = {
+      eventId: data.eventId,
+      teamName: data.teamName,
+      leaderName: data.leaderName,
+      leaderEmail: data.leaderEmail,
+      leaderPhone: data.leaderPhone,
+      leaderBranch: data.leaderBranch,
+      leaderYear: data.leaderYear,
+      members: data.members
+    };
+
+    registerTeam(registrationData);
     setShowSuccess(true);
     
-    // Show success toast
     toast({
       title: "Registration Submitted!",
       description: `${data.teamName} has been registered successfully.`,
