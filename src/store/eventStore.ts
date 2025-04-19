@@ -1,12 +1,31 @@
-
 import { create } from 'zustand';
 import { events as mockEvents, Event } from '../data/mockEvents';
+
+interface TeamMember {
+  name: string;
+  email: string;
+  collegeId: string;
+}
+
+export interface TeamRegistration {
+  id: string;
+  eventId: string;
+  teamName: string;
+  leaderName: string;
+  leaderEmail: string;
+  leaderPhone: string;
+  leaderBranch: string;
+  leaderYear: string;
+  members: TeamMember[];
+  registeredAt: Date;
+}
 
 interface EventState {
   events: Event[];
   featuredEvents: Event[];
   upcomingEvents: Event[];
   currentEvent: Event | null;
+  teamRegistrations: TeamRegistration[];
   
   // Actions
   addEvent: (event: Omit<Event, 'id'>) => void;
@@ -14,7 +33,8 @@ interface EventState {
   deleteEvent: (id: string) => void;
   setCurrentEvent: (id: string) => void;
   clearCurrentEvent: () => void;
-  registerTeam: (eventId: string) => void;
+  registerTeam: (registration: Omit<TeamRegistration, 'id' | 'registeredAt'>) => void;
+  getEventRegistrations: (eventId: string) => TeamRegistration[];
 }
 
 export const useEventStore = create<EventState>((set, get) => ({
@@ -23,6 +43,7 @@ export const useEventStore = create<EventState>((set, get) => ({
   upcomingEvents: [...mockEvents].map(event => ({ ...event, registeredTeams: Math.floor(Math.random() * 10) }))
     .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()),
   currentEvent: null,
+  teamRegistrations: [],
   
   addEvent: (event) => {
     const newEvent = {
@@ -85,24 +106,24 @@ export const useEventStore = create<EventState>((set, get) => ({
     set({ currentEvent: null });
   },
   
-  registerTeam: (eventId) => {
-    set((state) => {
-      const updatedEvents = state.events.map((event) => 
-        event.id === eventId 
-          ? { ...event, registeredTeams: (event.registeredTeams || 0) + 1 } 
+  registerTeam: (registrationData) => {
+    const newRegistration: TeamRegistration = {
+      ...registrationData,
+      id: `${Date.now()}`,
+      registeredAt: new Date(),
+    };
+
+    set((state) => ({
+      teamRegistrations: [...state.teamRegistrations, newRegistration],
+      events: state.events.map(event =>
+        event.id === registrationData.eventId
+          ? { ...event, registeredTeams: (event.registeredTeams || 0) + 1 }
           : event
-      );
-      
-      return {
-        events: updatedEvents,
-        featuredEvents: updatedEvents.filter(event => event.isFeatured),
-        upcomingEvents: [...updatedEvents].sort((a, b) => 
-          new Date(a.date).getTime() - new Date(b.date).getTime()
-        ),
-        currentEvent: state.currentEvent?.id === eventId 
-          ? { ...state.currentEvent, registeredTeams: (state.currentEvent.registeredTeams || 0) + 1 } 
-          : state.currentEvent,
-      };
-    });
+      ),
+    }));
+  },
+  
+  getEventRegistrations: (eventId: string) => {
+    return get().teamRegistrations.filter(reg => reg.eventId === eventId);
   },
 }));

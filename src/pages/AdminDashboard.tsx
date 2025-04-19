@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Navbar } from "@/components/Navbar";
@@ -12,6 +11,7 @@ import { AdminHeader } from "@/components/admin/AdminHeader";
 import { EventFilters } from "@/components/admin/EventFilters";
 import { EventsTable } from "@/components/admin/EventsTable";
 import { DeleteEventDialog } from "@/components/admin/DeleteEventDialog";
+import { TeamRegistrationsView } from "@/components/admin/TeamRegistrationsView";
 
 const AdminDashboard = () => {
   const { isAuthenticated, logout } = useAuthStore();
@@ -31,6 +31,7 @@ const AdminDashboard = () => {
     key: 'date',
     direction: 'desc'
   });
+  const [viewingRegistrations, setViewingRegistrations] = useState<Event | null>(null);
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -107,9 +108,17 @@ const AdminDashboard = () => {
     setEditingEvent(null);
   };
 
+  const handleViewRegistrations = (event: Event) => {
+    setViewingRegistrations(event);
+  };
+
   if (!isAuthenticated) {
     return null;
   }
+
+  const registrations = viewingRegistrations 
+    ? useEventStore.getState().getEventRegistrations(viewingRegistrations.id)
+    : [];
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -153,6 +162,27 @@ const AdminDashboard = () => {
               onCancel={handleFormCancel}
               isEditing={!!editingEvent}
             />
+          ) : viewingRegistrations ? (
+            <MotionBox
+              initial="hidden"
+              animate="visible"
+              variants={slideIn("up")}
+              className="bg-white rounded-lg shadow-md overflow-hidden"
+            >
+              <div className="p-6 border-b flex justify-between items-center">
+                <div>
+                  <h2 className="text-xl font-bold">{viewingRegistrations.title}</h2>
+                  <p className="text-gray-500">Team Registrations</p>
+                </div>
+                <Button variant="outline" onClick={() => setViewingRegistrations(null)}>
+                  Back to Events
+                </Button>
+              </div>
+              
+              <div className="p-6">
+                <TeamRegistrationsView registrations={registrations} />
+              </div>
+            </MotionBox>
           ) : (
             <MotionBox
               initial="hidden"
@@ -171,6 +201,7 @@ const AdminDashboard = () => {
                 onEdit={setEditingEvent}
                 onDelete={handleDeleteClick}
                 onView={(eventId) => navigate(`/events/${eventId}`)}
+                onViewRegistrations={(event) => handleViewRegistrations(event)}
                 sortConfig={sortConfig}
                 onSort={handleSort}
               />
