@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Navbar } from "@/components/Navbar";
 import { MotionBox, MotionSection, scaleIn, fadeIn } from "@/components/ui/motion";
 import { useAuthStore } from "@/store/authStore";
@@ -24,11 +24,12 @@ const AdminLogin = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  // Redirect if already authenticated
-  if (isAuthenticated) {
-    navigate("/admin");
-    return null;
-  }
+  // Use useEffect for navigation instead of doing it directly in the render function
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/admin");
+    }
+  }, [isAuthenticated, navigate]);
 
   const validateForm = () => {
     const errors: { email?: string; password?: string } = {};
