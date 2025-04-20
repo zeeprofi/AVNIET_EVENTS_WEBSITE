@@ -8,9 +8,16 @@ export const Navbar = () => {
     <nav className="bg-white shadow-sm">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
-          <Link to="/" className="text-xl font-bold text-gray-800">
-            AVN Events
-          </Link>
+          <div className="flex items-center space-x-4">
+            <img 
+              src="/lovable-uploads/baa3ba36-399e-4df8-bc70-19f2bd3cb3b0.png" 
+              alt="Department Logo" 
+              className="h-12 w-12"
+            />
+            <Link to="/" className="text-xl font-bold text-gray-800">
+              Dept Of CSE(AI & ML)
+            </Link>
+          </div>
 
           <NavigationMenu>
             <NavigationMenuList>
