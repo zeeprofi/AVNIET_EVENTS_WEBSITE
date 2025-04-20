@@ -11,6 +11,7 @@ import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
 import NotFound from "./pages/NotFound";
 import TeamRegistration from "./pages/TeamRegistration";
+import PastEvents from "./pages/PastEvents";
 
 const queryClient = new QueryClient();
 
@@ -23,6 +24,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/events" element={<Events />} />
+          <Route path="/past-events" element={<PastEvents />} />
           <Route path="/events/:id" element={<EventDetails />} />
           <Route path="/login" element={<AdminLogin />} />
           <Route path="/admin" element={<AdminDashboard />} />
